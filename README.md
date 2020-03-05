@@ -1,11 +1,11 @@
-# az_offset4slow_motion
-Measure Slow Tectonic Deformation from the Stack of Azimuth Dense Offsets
+# offset4slow_motion
 
+Measure slow tectonic deformation from the stack of azimuth dense offsets
 
-MaskAndFileter from stripmapStack to clean out the offsets (median filter)
+## For Fattahi et al. (in prep)
 
-invertOffsets.py from 
+Note: please download the repository to see the embeded images.
 
+1. [Offset stack](offset_stack.ipynb) from ISCE/topsStack
 
-Get one median value of the range offset of all valid pixels for each acquisition.
-
+2. [Offset time-series](offset_timeseries.ipynb) from MintPy
