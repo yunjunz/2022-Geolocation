@@ -20,3 +20,8 @@ Note: please download the repository to see the embeded images.
 
 2. [Offset time-series](offset_timeseries.ipynb) from MintPy
 
+To do list:
+
++ try the Sentinel-1 data on Chile (with strong iono) from Cunren's paper.
+
+
