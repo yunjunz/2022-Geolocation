@@ -29,6 +29,6 @@ To do list:
 
 + Summarize the offset difference on different sub-swaths from azimuth offset and on linear features from range offset, with Sentinel-1 A and B mark.
 
-+ try the Sentinel-1 data on Chile (with strong iono) from Cunren's paper.
++ try the Sentinel-1 asc track 149 data on Chile (ascending on low geomagnetic latitude with strong iono) from Liang et al. (2019, TGRS).
 
 
