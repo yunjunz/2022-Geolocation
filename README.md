@@ -34,3 +34,10 @@ To do list:
 + try the Sentinel-1 asc track 149 data on Chile (ascending on low geomagnetic latitude with strong iono) from Liang et al. (2019, TGRS).
 
 
++ abs iono delay in meter and TECU
+
++ abs tropo delay in dry and wet
+
++ 
+
+
