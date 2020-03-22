@@ -17,27 +17,12 @@ Measure slow tectonic deformation from the stack of azimuth dense offsets
 
 ## For Fattahi et al. (in prep)
 
-Note: please download the repository to see the embeded images.
-
 1. [Offset stack](offset_stack.ipynb) from ISCE/topsStack
 
 2. [Offset time-series](offset_timeseries.ipynb) from MintPy
 
 To do list:
 
-+ Get screenshots of different configurations on cuDenseOffsets.py, talk to Minyan, to make sure it's appropriate.
-
 + check IPF version number for those data.
 
 + Summarize the offset difference on different sub-swaths from azimuth offset and on linear features from range offset, with Sentinel-1 A and B mark.
-
-+ try the Sentinel-1 asc track 149 data on Chile (ascending on low geomagnetic latitude with strong iono) from Liang et al. (2019, TGRS).
-
-
-+ abs iono delay in meter and TECU
-
-+ abs tropo delay in dry and wet
-
-+ 
-
-
