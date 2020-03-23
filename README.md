@@ -15,7 +15,9 @@ Measure slow tectonic deformation from the stack of azimuth dense offsets
    Try a dry region for better coherence, use ALOS-2 for better coherence and higher azimuth resolution.
    
 
-## Atmospheric impact on the geolocation of satellite SAR images
+## Atmospheric impact on SAR geolocation (Fattahi et al., in prep.)
+
+Assess the impact of atmospheric delay on the geolocation of satellite SAR images. This impact should be reflected on the overall offset between SAR images, and can be assessed by computing the dense offset time-series and comparing with the predicted delay from ionosphere and troposphere.
 
 + config_cuDenseOffsets
 + offset_timeseries
