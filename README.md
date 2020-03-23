@@ -15,11 +15,11 @@ Measure slow tectonic deformation from the stack of azimuth dense offsets
    Try a dry region for better coherence, use ALOS-2 for better coherence and higher azimuth resolution.
    
 
-## For Fattahi et al. (in prep)
+## Atmospheric impact on the geolocation of satellite SAR images
 
-1. [Offset stack](offset_stack.ipynb) from ISCE/topsStack
-
-2. [Offset time-series](offset_timeseries.ipynb) from MintPy
++ config_cuDenseOffsets
++ offset_timeseries
++ atmos
 
 To do list:
 
