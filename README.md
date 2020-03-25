@@ -22,11 +22,10 @@ Assess the impact of atmospheric delay on the geolocation of satellite SAR image
 + config_cuDenseOffsets
 + offset_timeseries
 + atmos
++ tropo_ALOS2
 
 To do list:
 
 + check IPF version number for those data.
 
 + Summarize the offset difference on different sub-swaths from azimuth offset and on linear features from range offset, with Sentinel-1 A and B mark.
-
-+ Time-series of the contribution from tide. There are software to get tide. Mark probably has one. We can discuss this alter
