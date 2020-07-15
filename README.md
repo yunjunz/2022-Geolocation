@@ -8,9 +8,9 @@ Measure slow tectonic deformation from the stack of azimuth dense offsets
 
    Find an earthquake here: https://www.usgs.gov/natural-hazards/earthquake-hazards/lists-maps-and-statistics
 
-2. Update theoretical calculation of offset velocity for ALOS-2 and Sentinel-1. Demonstrate the need of CUDA code to support large memory usage, i.e. a window size of 1024 by 1024.
+2. Update theoretical calculation of offset velocity for ALOS-2 and Sentinel-1. Demonstrate the need of CUDA code to support large memory usage, i.e. a window size of 1024 by 1024. 
 
-   If ALOS-2 could work, check PIXEL data portal for a suitable test area.
+   If ALOS-2 could work, check PIXEL data portal for a suitable test area. A comparison between ALOS-2 and Sentinel-1 is shown in Fig. 6 in He et al. (2019, RSE).
    
    Try a dry region for better coherence, use ALOS-2 for better coherence and higher azimuth resolution.
    
