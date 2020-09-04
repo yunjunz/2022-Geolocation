@@ -1,4 +1,5 @@
 *checkpoints*
 *.DS_Store
+*.pyc
 *isce.log
 *.gif
