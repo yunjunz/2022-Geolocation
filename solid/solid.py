@@ -82,7 +82,7 @@ def calc_solid_earth_tide(date_str, geom_file, display=False, print_msg=True):
             np.cos(inc_angle),
         ]
 
-    # convert ENU to LOS direction
+    # convert ENU to LOS direction with positive towards satellite
     tide_los = (tide_e * unit_vec[0]
                 + tide_n * unit_vec[1]
                 + tide_u * unit_vec[2])
