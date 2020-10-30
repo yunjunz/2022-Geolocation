@@ -52,7 +52,7 @@ def save_gim_tec(out_file, date_list, gim_tec, top_tec, sub_tec, inc_angle, prin
 
 
 def read_offset_files(work_dir, fbaseDict={'SAR' : 'sar',
-                                           'GIM' : 'TECgim_median',
+                                           'GIM' : 'TECgim',
                                            'IGS' : 'TECigs',
                                            'ERA' : 'era5',
                                            'SET' : 'set'}, print_msg=True):
@@ -67,10 +67,11 @@ def read_offset_files(work_dir, fbaseDict={'SAR' : 'sar',
     dDict = {}
     for key, fbase in fbaseDict.items():
         fname = os.path.join(work_dir, '{}.pickle'.format(fbase))
-        with open(fname, 'rb') as f:
-            dDict[key] = pickle.load(f)
-            if print_msg:
-                print('read {} data from pickle file: {}'.format(key, fname))
+        if os.path.isfile(fname):
+            with open(fname, 'rb') as f:
+                dDict[key] = pickle.load(f)
+                if print_msg:
+                    print('read {} data from pickle file: {}'.format(key, fname))
 
     # flag for common dates
     def get_common_index(t1s, t2s):
@@ -98,8 +99,12 @@ def read_offset_files(work_dir, fbaseDict={'SAR' : 'sar',
 
         return flag1, flag2
 
-    flag = get_common_index(dDict['SAR']['date'],
-                            dDict['GIM']['date'])[0]
+    if 'GIM' in dDict.keys():
+        flag = get_common_index(dDict['SAR']['date'],
+                                dDict['GIM']['date'])[0]
+    else:
+        flag = np.ones(len(dDict['SAR']['date']), dtype=np.bool_)
+
     return dDict, flag
 
 
