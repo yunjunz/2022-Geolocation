@@ -3,5 +3,6 @@
 *.pyc
 *isce.log
 *.gif
+*.pdf
 docs/*.png
 
