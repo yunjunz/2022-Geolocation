@@ -4,6 +4,7 @@
 *isce.log
 *.gif
 *.pdf
+data/*
 docs/*.png
 TS/*.png
 
