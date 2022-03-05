@@ -1,0 +1,13 @@
+geopandas
+gdal
+h5py
+matplotlib
+mintpy
+numpy
+pandas
+pyaps3
+pysolid
+scipy
+seaborn
+shapely
+ipynb    # to import functions from *.ipynb files
