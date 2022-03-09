@@ -1,0 +1,73 @@
+# vim: set filetype=cfg:
+##------------------------------- ISCE tops/stripmapStack ----------------------##
+isce.processor          = stripmapStack  #[stripmapStack, topsStack]
+isce.workflow           = slc              #[slc / correlation / interferogram / offset], auto for interferogram
+isce.demSNWE            = 31, 33, 130, 132  #[S, N, W, E] in degree
+isce.demFile            = ~/data/geolocation/KyushuAlos2DT23/DEM/gsi10m.dem.wgs84
+isce.demSource          = gsi_dehm                      #[srtm1, srtm3, nasadem, gsi_dehm], auto for srtm1
+isce.azimuthLooks       = 10
+isce.rangeLooks         = 8
+isce.unwrapMethod       = snaphu
+isce.filtStrength       = 0.5
+isce.numProcess         = 4                          #[int>=1], number of processors, auto for 4
+
+
+##----------for stripmapStack only:
+## Sensors with zero doppler SLC: ALOS2
+## link: https://github.com/isce-framework/isce2/blob/master/components/isceobj/StripmapProc/Factories.py#L61
+isce.zeroDopper         = yes                        #[yes / no], use zero doppler geometry for processing, auto for no
+isce.focus              = no                         #[yes / no], do focus, auto for yes (for RAW data)
+isce.ALOS.fbd2fbs       = yes                        #[yes / no], auto for yes, convert FBD to FBS for ALOS-1
+isce.ALOS2.polarization = HH                         #[HH / VV], auto for HH
+isce.maxTempBaseline    = 400                        # auto for 1800 days
+isce.maxPerpBaseline    = 200                        # auto for 1800 meters
+isce.applyWaterMask     = yes                        # auto for yes
+
+
+##----------for cuDenseOffsets only:
+isce.waterMaskFillValue = -1     # -1 for water body, 0 for land
+isce.numConnection      = 0
+##----------for cuDenseOffsets:
+isce.offset.winSize           = 256,256
+isce.offset.searchRange       = 10,10
+isce.offset.stepSize          = 100,80
+isce.offset.numWinPerChunk    = 50,1
+isce.offset.rawOverSampFactor = 2
+isce.offset.corOverSampFactor = 64
+isce.offset.redo              = yes
+##----------for MaskAndFilter:
+isce.maskFilt.filterSize      = 8
+isce.maskFilt.minSNR          = 5
+
+
+##------------------------------- mintpy OPTIONS -------------------------------##
+## load_data.py -H to check more details and example inputs.
+mintpy.load.processor        = isce
+##---------for ISCE only:
+mintpy.load.metaFile         = ../referenceShelve/data.dat
+mintpy.load.baselineDir      = ../baselines
+##---------offset datasets:
+mintpy.load.rgOffFile        = ../offsets/*/filtRa*.off                  #[path2rg_off_file], optional
+mintpy.load.azOffFile        = ../offsets/*/filtAz*.off                  #[path2az_off_file], optional
+mintpy.load.offSnrFile       = ../offsets/*/*_snr*.bip                   #[path2off_SNR_file], optional
+##---------geometry datasets:
+mintpy.load.demFile          = ../offsets/geom_reference/hgt.rdr
+mintpy.load.lookupYFile      = ../offsets/geom_reference/lat.rdr
+mintpy.load.lookupXFile      = ../offsets/geom_reference/lon.rdr
+mintpy.load.incAngleFile     = ../offsets/geom_reference/los.rdr
+mintpy.load.azAngleFile      = ../offsets/geom_reference/los.rdr
+mintpy.load.shadowMaskFile   = ../offsets/geom_reference/shadowMask.rdr
+mintpy.load.waterMaskFile    = ../offsets/geom_reference/waterMask.rdr
+
+mintpy.network.connNumMax               = auto
+mintpy.network.endDate                  = 20190901
+mintpy.networkInversion.weightFunc      = no
+mintpy.networkInversion.waterMaskFile   = waterMask.h5
+mintpy.networkInversion.maskDataset     = offsetSNR
+mintpy.networkInversion.maskThreshold   = 3
+mintpy.networkInversion.minRedundancy   = 1.0
+mintpy.mask.maxResidual     = 1.0    #[0.0-inf], auto for 0.125, max residual in pixel
+mintpy.ionosphericDelayTEC  = jphTEC  #[subTEC, jphTEC, igsTEC, codTEC, no], auto for no
+mintpy.reference.date	    = 20180820
+mintpy.plot                 = no
+

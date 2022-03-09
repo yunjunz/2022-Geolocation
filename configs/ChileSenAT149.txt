@@ -1,0 +1,90 @@
+# vim: set filetype=cfg:
+##------------------------------- ISCE tops/stripmapStack ------------------------------##
+isce.processor          = topsStack                  #[stripmapStack, topsStack], auto for topsStack
+isce.workflow           = interferogram              #[slc / interferogram / offset], auto for interferogram
+isce.demSNWE            = -24,-19,-71,-66            #[S, N, W, E] in degree, auto for none
+isce.demFile            = none                       #DEM file name, auto for none (generate on the fly)
+isce.demSource          = srtm1                      #[srtm1, srtm3, nasadem, gsi_dehm], auto for srtm1
+isce.demFillValue       = 0                          #[0 / 1 / -32768], value used to fill missing DEMs, auto for -32768
+isce.boundingBox        = -21.8,-20.6,-69.6,-67.0    #[S, N, W, E] in degree, auto for none
+isce.referenceDate      = none                       #[20150101 / no], auto for none (1st date)
+isce.azimuthLooks       = 10                         #[int], auto for 3
+isce.rangeLooks         = 30                         #[int], auto for 9
+isce.filtStrength       = 0.5                        #[0.0-1.0], auto for 0.5
+isce.unwrapMethod       = snaphu                     #[snaphu / icu], auto for snaphu
+isce.useGPU             = yes                        #[yes / no], auto for no
+
+##----------for topsStack only:
+isce.coregistration     = geometry                   #[geometry / NESD], auto for geometry
+isce.swathNum           = 1,2,3                      #[1,2,3], auto for '1,2,3'
+isce.numConnection      = 3                          #[int>=1], auto for 3
+isce.orbitDir           = ~/bak/aux/aux_poeorb/      #Directory with all orbit files
+isce.auxDir             = ~/bak/aux/aux_cal/         #Directory with all aux   files
+isce.startDate          = none                       #[20140825 / no], auto for none (1st date)
+isce.endDate            = none                       #[20190622 / no], auto for none (last date)
+
+
+##------- offset stack
+inps.numProcess         = 4      # number of parallel processes
+isce.numConnection      = 3
+isce.waterMaskFillValue = 0     # -1 for water body, 0 for land
+##----------for cuDenseOffsets:
+isce.offset.winSize           = 256,128
+isce.offset.searchRange       = 10,10
+isce.offset.stepSize          = 300,100
+isce.offset.rawOverSampFactor = 2
+isce.offset.corOverSampFactor = 64
+isce.offset.numWinPerChunk    = 50,1
+isce.offset.redo              = 1   # 1 (force redo) or 0 ignore existing files
+##----------for MaskAndFilter:
+isce.maskFilt.filterSize      = 8
+isce.maskFilt.minSNR          = 20
+
+
+
+##---------------------------------------- MintPy ----------------------------------------##
+mintpy.compute.cluster      = local
+mintpy.load.processor       = isce  #[isce,snap,gamma,roipac], auto for isce
+##---------for ISCE only:
+mintpy.load.metaFile        = ../reference/IW1.xml  #[path2metadata_file], i.e.: ./master/IW1.xml, ./masterShelve/data.dat
+mintpy.load.baselineDir     = ../baselines  #[path2baseline_dir], i.e.: ./baselines
+##---------offset datasets:
+mintpy.load.azOffFile       = ../merged/offsets/*/filtAz*.off  #[path2az_off_file], optional
+mintpy.load.rgOffFile       = ../merged/offsets/*/filtRa*.off  #[path2rg_off_file], optional
+mintpy.load.azOffStdFile    = ../merged/offsets/*/offset_cov.bip
+mintpy.load.rgOffStdFile    = ../merged/offsets/*/offset_cov.bip
+mintpy.load.offSnrFile      = ../merged/offsets/*/offset_snr.bip   #[path2off_SNR_file], optional
+##---------geometry datasets:
+mintpy.load.demFile         = ../merged/offsets/geom_reference/hgt.rdr  #[path2hgt_file]
+mintpy.load.lookupYFile     = ../merged/offsets/geom_reference/lat.rdr  #[path2lat_file], not required for geocoded data
+mintpy.load.lookupXFile     = ../merged/offsets/geom_reference/lon.rdr  #[path2lon_file], not required for geocoded data
+mintpy.load.incAngleFile    = ../merged/offsets/geom_reference/los.rdr  #[path2los_file], optional
+mintpy.load.azAngleFile     = ../merged/offsets/geom_reference/los.rdr  #[path2los_file], optional
+mintpy.load.shadowMaskFile  = ../merged/offsets/geom_reference/shadowMask.rdr  #[path2shadow_file], optional
+mintpy.load.waterMaskFile   = ../merged/offsets/geom_reference/waterMask.rdr  #[path2water_mask_file], optional
+
+
+mintpy.network.connNumMax   	      	= auto #4
+mintpy.networkInversion.weightFunc    	= no
+mintpy.networkInversion.waterMaskFile 	= waterMask.h5
+mintpy.networkInversion.maskDataset   	= rangeOffsetStd
+mintpy.networkInversion.maskThreshold 	= 0.04
+mintpy.networkInversion.minRedundancy 	= 1.0
+mintpy.reference.date       		= 20200123
+mintpy.mask.maxResidual     		= 0.25    #[0.0-inf], auto for 0.125, max residual in pixel
+mintpy.ionosphericDelayTEC              = jhrTEC  #[subTEC, jphTEC, igsTEC, codTEC, no], auto for no
+mintpy.plot                 		= no
+
+
+##---------for phase only:
+#mintpy.compute.cluster      = local
+#mintpy.load.autoPath        = yes
+#mintpy.network.coherenceBased                   = yes
+#mintpy.network.minCoherence                     = 0.4
+#mintpy.reference.lalo                           = -29,-71
+#mintpy.networkInversion.weightFunc              = no
+#mintpy.topographicResidual.pixelwiseGeometry    = no
+#mintpy.topographicResidual.stepFuncDate         = 20200901
+#mintpy.residualRMS.cutoff                       = 4
+#mintpy.deramp                                   = linear
+
