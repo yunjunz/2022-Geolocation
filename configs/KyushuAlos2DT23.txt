@@ -1,55 +1,68 @@
 # vim: set filetype=cfg:
 ##------------------------------- ISCE tops/stripmapStack ----------------------##
-isce.processor          = stripmapStack  #[stripmapStack, topsStack]
-isce.workflow           = slc              #[slc / correlation / interferogram / offset], auto for interferogram
-isce.demSNWE            = 31, 33, 130, 132  #[S, N, W, E] in degree
-isce.demFile            = ~/data/geolocation/KyushuAlos2DT23/DEM/gsi10m.dem.wgs84
-isce.demSource          = gsi_dehm                      #[srtm1, srtm3, nasadem, gsi_dehm], auto for srtm1
-isce.azimuthLooks       = 10
-isce.rangeLooks         = 8
-isce.unwrapMethod       = snaphu
-isce.filtStrength       = 0.5
-isce.numProcess         = 4                          #[int>=1], number of processors, auto for 4
-
+isce.processor          = stripmapStack 		#[stripmapStack, topsStack], auto for topsStack
+isce.workflow           = slc     			#[slc / interferogram / offset], auto for interferogram
+isce.demSNWE            = 31, 33, 130, 132		#[S, N, W, E] in degree, auto for none
+isce.demFile            = ../DEM/gsi10m.dem.wgs84	#DEM file name, auto for none (generate on the fly)
+isce.demSource          = gsi_dehm			#[srtm1, srtm3, nasadem, gsi_dehm], auto for srtm1
+isce.demFillValue       = 0				#[0 / 1 / -32768], value used to fill missing DEMs, auto for -32768
+isce.boundingBox        = none				#[S, N, W, E] in degree, auto for none
+isce.referenceDate      = none				#[20150101 / no], auto for none (1st date)
+isce.azimuthLooks       = 10				#[int], auto for 3
+isce.rangeLooks         = 8				#[int], auto for 9
+isce.filtStrength       = 0.5				#[0.0-1.0], auto for 0.5
+isce.unwrapMethod       = snaphu			#[snaphu / icu], auto for snaphu
+isce.useGPU             = yes				#[yes / no], auto for no
+isce.numProcess         = 4				#[int>=1], number of processors, auto for 4
 
 ##----------for stripmapStack only:
 ## Sensors with zero doppler SLC: ALOS2
 ## link: https://github.com/isce-framework/isce2/blob/master/components/isceobj/StripmapProc/Factories.py#L61
-isce.zeroDopper         = yes                        #[yes / no], use zero doppler geometry for processing, auto for no
-isce.focus              = no                         #[yes / no], do focus, auto for yes (for RAW data)
-isce.ALOS.fbd2fbs       = yes                        #[yes / no], auto for yes, convert FBD to FBS for ALOS-1
-isce.ALOS2.polarization = HH                         #[HH / VV], auto for HH
-isce.maxTempBaseline    = 400                        # auto for 1800 days
-isce.maxPerpBaseline    = 200                        # auto for 1800 meters
-isce.applyWaterMask     = yes                        # auto for yes
+isce.zeroDopper         = yes				#[yes / no], use zero doppler geometry for processing, auto for no
+isce.focus              = no				#[yes / no], do focus, auto for yes (for RAW data)
+isce.ALOS.fbd2fbs       = yes				#[yes / no], auto for yes, convert FBD to FBS for ALOS-1
+isce.ALOS2.polarization = HH				#[HH / VV], auto for HH
+isce.maxTempBaseline    = 400				# auto for 1800 days
+isce.maxPerpBaseline    = 200				# auto for 1800 meters
+isce.applyWaterMask     = yes				# auto for yes
 
 
-##----------for cuDenseOffsets only:
-isce.waterMaskFillValue = -1     # -1 for water body, 0 for land
-isce.numConnection      = 0
+
+##------------------------------- PyCuAmpcor offsetStack ---------------------------------##
+offset.processor          = stripmapStack	#[topsStack, stripmapStack]
+offset.numProcess         = 4			# number of parallel processes
+offset.waterMaskFillValue = -1			# -1 for water body, 0 for land
+offset.numConnection      = no			# recommended for topsStack, set to 0 or no to turn off
+offset.maxTempBaseline    = 400			# recommended for stripmapStack, set to 0 or no to turn off
+offset.maxPerpBaseline    = 200			# recommended for stripmapStack, set to 0 or no to turn off
 ##----------for cuDenseOffsets:
-isce.offset.winSize           = 256,256
-isce.offset.searchRange       = 10,10
-isce.offset.stepSize          = 100,80
-isce.offset.numWinPerChunk    = 50,1
-isce.offset.rawOverSampFactor = 2
-isce.offset.corOverSampFactor = 64
-isce.offset.redo              = yes
-##----------for MaskAndFilter:
-isce.maskFilt.filterSize      = 8
-isce.maskFilt.minSNR          = 5
+offset.winSize             = 256,256
+offset.searchRange         = 10,10
+offset.stepSize            = 100,80
+offset.numWinPerChunk      = 50,1
+offset.rawOverSampFactor   = 2
+offset.corOverSampFactor   = 64
+offset.redo                = yes
+offset.fixXml              = no
+offset.fixVrt              = no
+##----------for ISCE-2/stripmapStack/MaskAndFilter:
+offset.maskFilt.filterSize = 8
+offset.maskFilt.minSNR     = 5
+
 
 
 ##------------------------------- mintpy OPTIONS -------------------------------##
-## load_data.py -H to check more details and example inputs.
-mintpy.load.processor        = isce
+mintpy.compute.cluster      = local
+mintpy.load.processor       = isce                                              #[isce,snap,gamma,roipac], auto for isce
 ##---------for ISCE only:
-mintpy.load.metaFile         = ../referenceShelve/data.dat
-mintpy.load.baselineDir      = ../baselines
+mintpy.load.metaFile         = ../referenceShelve/data.dat			#[path2metadata_file], i.e.: ./master/IW1.xml, ./masterShelve/data.dat
+mintpy.load.baselineDir      = ../baselines					#[path2baseline_dir], i.e.: ./baselines
 ##---------offset datasets:
-mintpy.load.rgOffFile        = ../offsets/*/filtRa*.off                  #[path2rg_off_file], optional
-mintpy.load.azOffFile        = ../offsets/*/filtAz*.off                  #[path2az_off_file], optional
-mintpy.load.offSnrFile       = ../offsets/*/*_snr*.bip                   #[path2off_SNR_file], optional
+mintpy.load.rgOffFile        = ../offsets/*/filtRa*.off                  	#[path2rg_off_file], optional
+mintpy.load.azOffFile        = ../offsets/*/filtAz*.off                  	#[path2az_off_file], optional
+mintpy.load.rgOffStdFile     = ../offsets/*/offset_cov.bip			#[path pattern of azimuth offset variance file], optional
+mintpy.load.azOffStdFile     = ../offsets/*/offset_cov.bip			#[path pattern of azimuth offset variance file], optional
+mintpy.load.offSnrFile       = ../offsets/*/offset_snr.bip                   	#[path2off_SNR_file], optional
 ##---------geometry datasets:
 mintpy.load.demFile          = ../offsets/geom_reference/hgt.rdr
 mintpy.load.lookupYFile      = ../offsets/geom_reference/lat.rdr
@@ -59,15 +72,22 @@ mintpy.load.azAngleFile      = ../offsets/geom_reference/los.rdr
 mintpy.load.shadowMaskFile   = ../offsets/geom_reference/shadowMask.rdr
 mintpy.load.waterMaskFile    = ../offsets/geom_reference/waterMask.rdr
 
+## network inversion
 mintpy.network.connNumMax               = auto
 mintpy.network.endDate                  = 20190901
 mintpy.networkInversion.weightFunc      = no
 mintpy.networkInversion.waterMaskFile   = waterMask.h5
-mintpy.networkInversion.maskDataset     = offsetSNR
-mintpy.networkInversion.maskThreshold   = 3
+mintpy.networkInversion.maskDataset     = rangeOffsetStd #offsetSNR
+mintpy.networkInversion.maskThreshold   = 1.0  # 3
 mintpy.networkInversion.minRedundancy   = 1.0
-mintpy.mask.maxResidual     = 1.0    #[0.0-inf], auto for 0.125, max residual in pixel
-mintpy.ionosphericDelayTEC  = jphTEC  #[subTEC, jphTEC, igsTEC, codTEC, no], auto for no
+
+## error correction
+mintpy.ionosphericDelayTEC  = TECjhr		#[TECsub, TECjhr, TECjlr, TECclr, no], auto for no
+mintpy.solidEarthTides      = no                #[yes / no], auto for no
+
 mintpy.reference.date	    = 20180820
-mintpy.plot                 = no
+
+## post-processing
+mintpy.mask.maxResidual     = 1.0    		#[0.0-inf], auto for 0.125, max residual in pixel
+mintpy.plot                 = no		#turn OFF plotting while calling smallbaselineApp.py
 
