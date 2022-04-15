@@ -20,7 +20,7 @@ For each dataset, it includes:
 
 ## Figures
 
-NOTE: This notebook is based on the released version of MintPy-1.3.2 and NOT maintained for furture development.
+NOTE: This notebook is based on the released version of MintPy-1.3.3 and NOT maintained for furture development.
 
 + [Fig. 3](https://nbviewer.org/github/yunjunz/2022-Geolocation/blob/main/notebooks/Fig_03_TS_tropo.ipynb) - Absolute tropospheric delay time series.
 + [Fig. 4](https://nbviewer.org/github/yunjunz/2022-Geolocation/blob/main/notebooks/Fig_04_SET.ipynb) - Solid Earth tides in LOS direction and its power spectral density.
