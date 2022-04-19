@@ -1,8 +1,8 @@
-# Notebooks for:
+## Jupyter Notebooks for:
 
-Yunjun, Z., Fattahi, H., Pi, X., Rosen, P., Simons, M., Agram, P., & Aoki, Y. (2022). Range Geolocation Accuracy of C/L-band SAR and its Implications for Operational Stack Coregistration. _IEEE Transactions on Geoscience and Remote Sensing_ [in revision].
+Yunjun, Z., Fattahi, H., Pi, X., Rosen, P., Simons, M., Agram, P., & Aoki, Y. (2022). Range Geolocation Accuracy of C/L-band SAR and its Implications for Operational Stack Coregistration. _IEEE Trans. Geosci. Remote Sens._, doi:[10.1109/TGRS.2022.3168509](https://doi.org/10.1109/TGRS.2022.3168509).
 
-## Data ([Zenodo](https://zenodo.org/record/6360749))
+### Data ([Zenodo](https://zenodo.org/record/6360749))
 
 The used data in the paper is available on Zenodo at https://doi.org/10.5281/zenodo.6360749. It includes the following 3 test sites:
 
@@ -18,7 +18,7 @@ For each dataset, it includes:
 + Solid Earth tides prediction (using PySolid)
 + ERA5 tropospheric delay prediction (using PyAPS)
 
-## Figures
+### Figures
 
 NOTE: This notebook is based on the released version of MintPy-1.3.3 and NOT maintained for furture development.
 
