@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<insarApp>
+  <component name="insar">
+    <property name="sensor name">ALOS</property>
+    <component name="reference">
+        <catalog>reference.xml</catalog>
+    </component>
+    <component name="secondary">
+        <catalog>secondary.xml</catalog>
+    </component>
+    <property name="demFilename">
+        <value>DEM/demLat_N18_N21_Lon_W156_W154.dem.wgs84</value>
+    </property>
+    <!--
+      <property name="do rubbersheetingAzimuth">True</property>
+      <property name="do rubbersheetingRange">False</property>
+    -->
+    <property name="range looks">1</property>
+    <property name="azimuth looks">1</property>
+
+    <property name="do dense offsets">True</property>
+    <property name="dense window width">64</property>
+    <property name="dense window height">64</property>
+    <property name="dense skip width">8</property>
+    <property name="dense skip height">32</property>
+
+    <property name="do dispersive">True</property>
+    <property name="dispersive filter mask type">coherence</property>
+    <property name="dispersive filter coherence threshold">0.6</property>
+
+    <property name="do split spectrum">True</property>
+    <property name="do unwrap">True</property>
+    <property name="unwrapper name">snaphu</property>
+
+  </component>
+</insarApp>
